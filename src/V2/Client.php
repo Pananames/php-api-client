@@ -3,6 +3,7 @@
 namespace Pananames\Api\V2;
 
 use Pananames\Api\V2\Entities\Account;
+use Pananames\Api\V2\Entities\Other;
 use Pananames\Api\V2\HttpClients\HttpClient;
 
 class Client
@@ -18,6 +19,11 @@ class Client
     public $accountInstance;
 
     /**
+     * @var Other
+     */
+    public $otherInstance;
+
+    /**
      * Create and return Brands instance
      *
      * @return Account
@@ -29,6 +35,15 @@ class Client
         }
 
         return $this->accountInstance;
+    }
+
+    public function other(): Other
+    {
+        if (!$this->otherInstance) {
+            $this->otherInstance = new Other($this->httpClient);
+        }
+
+        return $this->otherInstance;
     }
 
     /**

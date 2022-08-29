@@ -1,0 +1,39 @@
+{
+  "type": "array",
+  "properties": {
+    "meta": {
+      "$ref": "../MetaInfo.json"
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "type": { "$ref": "#/definitions/emailInfo" }
+      }
+    }
+  },
+  "required": ["data", "meta"],
+  "definitions": {
+    "emailInfo" : {
+      "properties" : {
+        "email": { "type": "string" },
+        "first_email_date": { "type": "string" },
+        "verify_date": { "type": "string" },
+        "suspend_date": { "type": "string" },
+        "status": { "enum": ["unverified", "verified", "suspended"] },
+        "domains": {
+          "type": "array",
+          "items": {
+            "type": { "$ref": "#/definitions/domainInfo" }
+          }
+        }
+      },
+      "required": ["email", "first_email_date", "verify_date", "suspend_date", "status", "domains"]
+    },
+    "domainInfo": {
+      "properties": {
+        "domain": { "type": "string" },
+        "status": { "enum" : ["ok", "transfer out ready", "transferring out", "expired", "redemption", "suspended"]}
+      }
+    }
+  }
+}
