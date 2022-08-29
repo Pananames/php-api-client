@@ -20,7 +20,7 @@ class Client
     /**
      * Create and return Brands instance
      *
-     * @return Brands
+     * @return Account
      */
     public function account(): Account
     {

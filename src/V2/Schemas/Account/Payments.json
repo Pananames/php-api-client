@@ -1,0 +1,36 @@
+{
+  "type": "array",
+  "properties": {
+    "meta": {
+      "type": "array",
+      "properties" : {
+        "current_page": { "type": "integer" },
+        "per_page": { "type": "integer" },
+        "total_entries": { "type": "integer" },
+        "total_pages" : { "type": "integer" }
+      },
+      "required": ["current_page", "per_page", "total_entries", "total_pages"]
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "type": { "$ref": "#/definitions/paymentInfo" }
+      }
+    }
+  },
+  "required": ["data", "meta"],
+  "definitions": {
+    "paymentInfo" : {
+      "properties" : {
+        "txid": { "type": "string" },
+        "txdate": { "type": "string" },
+        "txtype": { "enum": ["create", "renew", "transfer", "redeem", "refund", "manual"] },
+        "domain": { "type": "string" },
+        "period": { "type": "string" },
+        "description": { "type": "string" },
+        "total": { "type": "number" }
+      },
+      "required": ["txid", "txdate", "txtype", "domain", "period", "description", "total"]
+    }
+  }
+}

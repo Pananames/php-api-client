@@ -29,7 +29,7 @@ class Validator
         if ($jsonValidator->isValid()) {
             return;
         } else {
-            $msgErr =  "JSON does not validate. Violations: ";
+            $msgErr =  "JSON does not validate. Violations: \n";
             foreach ($jsonValidator->getErrors() as $error) {
                 $msgErr .= "[{$error['property']}]. {$error['message']}\n";
             }

@@ -4,9 +4,7 @@
     "data": {
       "type": "array",
       "properties" : {
-        "balance": {
-          "type": "number"
-        }
+        "balance": { "type": "number" }
       },
       "required": ["balance"]
     }
