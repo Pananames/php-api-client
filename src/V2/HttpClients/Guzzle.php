@@ -4,7 +4,6 @@ namespace Pananames\Api\V2\HttpClients;
 
 use Exception;
 use Pananames\Api\Exceptions\InvalidApiResponse;
-use Pananames\Api\V2\HttpClients\HttpClient;
 use GuzzleHttp\Client;
 
 class Guzzle extends HttpClient
@@ -64,25 +63,6 @@ class Guzzle extends HttpClient
             $options['form_params'] = $formParams;
         }
 
-        $response = $this->client->request($method, $resource, $options);
-        $statusCode = $response->getStatusCode();
-        $content = $response->getBody()->getContents();
-
-        if ($statusCode == 204 && empty($content)) {
-            return true;
-        }
-
-        $content = json_decode($content, true);
-        if (is_null($content)) {
-            throw new InvalidApiResponse;
-        }
-
-        $statusCode = $response->getStatusCode();
-        if ($statusCode >= 400 || !empty($content['error'])) {
-            $error = empty($content['error']) ? $response->getReasonPhrase() : $content['error'];
-            throw new Exception($error);
-        }
-
-        return $content;
+        return $this->client->request($method, $resource, $options);
     }
 }
