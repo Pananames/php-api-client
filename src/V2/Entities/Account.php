@@ -7,7 +7,7 @@ use Pananames\Api\V2\Response\Account\PaymentsResponse;
 
 class Account extends Entity
 {
-    public function balance(): BalanceResponse
+    public function getBalance(): BalanceResponse
     {
         $response = $this->httpClient->request('account/balance', 'GET', []);
         $dataContents = json_decode($response->getBody()->getContents(), 1);
@@ -20,7 +20,7 @@ class Account extends Entity
         return $balanceResponse;
     }
 
-    public function payments(
+    public function getPayments(
         int $currentPage = 1,
         int $perPage = 30,
         int $id = null,

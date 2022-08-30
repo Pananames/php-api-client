@@ -7,7 +7,7 @@ use Pananames\Api\V2\Response\BaseResponse;
 
 class Other extends Entity
 {
-    public function addReqList()
+    public function getNoticesList()
     {
         $response = $this->httpClient->request('add_req_list', 'GET', []);
         $dataContents = json_decode($response->getBody()->getContents(), 1);
@@ -20,7 +20,7 @@ class Other extends Entity
         return $baseResponse;
     }
 
-    public function tlds(): BaseResponse
+    public function getTlds(): BaseResponse
     {
         $response = $this->httpClient->request('tlds', 'GET', []);
         $dataContents = json_decode($response->getBody()->getContents(), 1);
@@ -33,7 +33,7 @@ class Other extends Entity
         return $baseResponse;
     }
 
-    public function emails(
+    public function getEmails(
         int $currentPage,
         int $perPage,
         string $emailLike,
