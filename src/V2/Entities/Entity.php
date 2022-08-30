@@ -30,7 +30,7 @@ class Entity
      * @throws InvalidApiResponse
      * @throws Exception
      */
-    public function validate(ResponseInterface $response, $dataContents, string $schema): void
+    public function validate(ResponseInterface $response, $dataContents, string $schema = ''): void
     {
         if (is_null($dataContents)) {
             throw new InvalidApiResponse;
@@ -43,7 +43,9 @@ class Entity
             throw new Exception($error);
         }
 
-        $validator = new Validator($schema);
-        $validator->validate($dataContents);
+        if ($schema) {
+            $validator = new Validator($schema);
+            $validator->validate($dataContents);
+        }
     }
 }

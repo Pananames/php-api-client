@@ -7,6 +7,16 @@ use Pananames\Api\V2\Response\TransferIn\TransfersListResponse;
 
 class TransferIn extends Entity
 {
+    /**
+     * @param $currentPage
+     * @param $perPage
+     * @param $domainLike
+     * @param $status
+     *
+     * @return TransfersListResponse
+     *
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
     public function getTransfersList(
         $currentPage = '1',
         $perPage = '30',
@@ -37,6 +47,13 @@ class TransferIn extends Entity
         return $transfersListResponse;
     }
 
+    /**
+     * @param $data
+     *
+     * @return BaseResponse
+     *
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
     public function initTransfetIn($data): BaseResponse
     {
         $response = $this->httpClient->request('transfers_in', 'POST', [], [], $data);
@@ -49,5 +66,23 @@ class TransferIn extends Entity
         $transferInResponse->setHttpCode($response->getStatusCode());
 
         return $transferInResponse;
+    }
+
+    /**
+     * @param string $domain
+     *
+     * @return bool
+     *
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
+    public function cancel(string $domain): bool
+    {
+        $response = $this->httpClient->request('transfers_in', 'DELETE', [], [], ['domain' => $domain]);
+
+        $dataContents = $response->getBody()->getContents();
+
+        $this->validate($response, $dataContents);
+
+        return true;
     }
 }
