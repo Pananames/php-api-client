@@ -4,7 +4,7 @@ namespace Pananames\Api\V2\Response\TransferIn;
 
 use Pananames\Api\V2\Response\BaseResponse;
 
-class TransferInResponse extends BaseResponse
+class TransfersListResponse extends BaseResponse
 {
     private array $meta;
 
