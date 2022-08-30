@@ -3,21 +3,34 @@
 namespace Pananames\Api\V2\Entities;
 
 use Pananames\Api\V2\Response\Other\EmailsResponse;
-use Pananames\Api\V2\Response\Other\TldsResponse;
+use Pananames\Api\V2\Response\BaseResponse;
 
 class Other extends Entity
 {
-    public function tlds(): TldsResponse
+    public function addReqList()
+    {
+        $response = $this->httpClient->request('add_req_list', 'GET', []);
+        $dataContents = json_decode($response->getBody()->getContents(), 1);
+
+        $this->validate($response, $dataContents, 'Other/RegistrationNotices');
+
+        $baseResponse = new BaseResponse($dataContents['data']);
+        $baseResponse->setHttpCode($response->getStatusCode());
+
+        return $baseResponse;
+    }
+
+    public function tlds(): BaseResponse
     {
         $response = $this->httpClient->request('tlds', 'GET', []);
         $dataContents = json_decode($response->getBody()->getContents(), 1);
 
         $this->validate($response, $dataContents, 'Other/Tlds');
 
-        $tldsResponse = new TldsResponse($dataContents['data']);
-        $tldsResponse->setHttpCode($response->getStatusCode());
+        $baseResponse = new BaseResponse($dataContents['data']);
+        $baseResponse->setHttpCode($response->getStatusCode());
 
-        return $tldsResponse;
+        return $baseResponse;
     }
 
     public function emails(
