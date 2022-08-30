@@ -37,7 +37,9 @@ class Entity
         }
 
         if ($response->getStatusCode() >= 400 || !empty($dataContents['errors'])) {
-            $error = empty($content['errors']) ? $response->getReasonPhrase() : $dataContents['errors'];
+            $error = empty($dataContents['errors'])
+                ? $response->getReasonPhrase()
+                : "{$dataContents['errors'][0]['message']} {$dataContents['errors'][0]['description']}";
             throw new Exception($error);
         }
 
