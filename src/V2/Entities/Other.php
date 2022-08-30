@@ -3,9 +3,23 @@
 namespace Pananames\Api\V2\Entities;
 
 use Pananames\Api\V2\Response\Other\EmailsResponse;
+use Pananames\Api\V2\Response\Other\TldsResponse;
 
 class Other extends Entity
 {
+    public function tlds(): TldsResponse
+    {
+        $response = $this->httpClient->request('tlds', 'GET', []);
+        $dataContents = json_decode($response->getBody()->getContents(), 1);
+
+        $this->validate($response, $dataContents, 'Other/Tlds');
+
+        $tldsResponse = new TldsResponse($dataContents['data']);
+        $tldsResponse->setHttpCode($response->getStatusCode());
+
+        return $tldsResponse;
+    }
+
     public function emails(
         int $currentPage,
         int $perPage,
