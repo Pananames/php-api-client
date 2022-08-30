@@ -45,12 +45,12 @@ class Guzzle extends HttpClient
      * @param string $method Request method
      * @param array $headers Request headers
      * @param array $queryParams Request GET params
-     * @param array $formParams Request form params
+     * @param array $bodyParams Request body params
      *
      * @throws InvalidApiResponse
      * @throws Exception
      */
-    public function request(string $resource, string $method = 'GET', array $headers = [], array $queryParams = [], array $formParams = [])
+    public function request(string $resource, string $method = 'GET', array $headers = [], array $queryParams = [], array $bodyParams = [])
     {
         $options = [];
         if (!empty($headers)) {
@@ -59,8 +59,8 @@ class Guzzle extends HttpClient
         if (!empty($queryParams)) {
             $options['query'] = $queryParams;
         }
-        if (!empty($formParams)) {
-            $options['form_params'] = $formParams;
+        if (!empty($bodyParams)) {
+            $options['body'] = json_encode($bodyParams);
         }
 
         return $this->client->request($method, $resource, $options);
