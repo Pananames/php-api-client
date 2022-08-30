@@ -4,6 +4,7 @@ namespace Pananames\Api\V2;
 
 use Pananames\Api\V2\Entities\Account;
 use Pananames\Api\V2\Entities\Other;
+use Pananames\Api\V2\Entities\TransferIn;
 use Pananames\Api\V2\HttpClients\HttpClient;
 
 class Client
@@ -24,7 +25,27 @@ class Client
     public $otherInstance;
 
     /**
-     * Create and return Brands instance
+     * @var TransferIn
+     */
+    public $transferInInstance;
+
+    /**
+     * Create and return TransferIn instance
+     *
+     * @return TransferIn
+     */
+    public function transferIn(): TransferIn
+    {
+        if (!$this->transferInInstance) {
+            $this->transferInInstance = new TransferIn($this->httpClient);
+        }
+
+        return $this->transferInInstance;
+    }
+
+
+    /**
+     * Create and return Account instance
      *
      * @return Account
      */
@@ -37,6 +58,10 @@ class Client
         return $this->accountInstance;
     }
 
+    /**
+     *
+     * @return Other
+     */
     public function other(): Other
     {
         if (!$this->otherInstance) {

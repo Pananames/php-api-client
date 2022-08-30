@@ -1,0 +1,44 @@
+{
+  "type": "array",
+  "properties": {
+    "meta": {
+      "$ref": "../MetaInfo.json"
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "type": { "$ref": "#/definitions/domainInfo" }
+      }
+    }
+  },
+  "required": ["data", "meta"],
+  "definitions": {
+    "domainInfo" : {
+      "properties" : {
+        "domain": { "type": "string" },
+        "transfer_status": {
+          "enum": ["waiting registrant confirmation", "registrant rejected", "registrar rejected", "waiting transfer"]
+        },
+        "premium_price": { "type": "number" },
+        "whois_privacy": { "type": "boolean" },
+        "registrant_contact": { "$ref": "#/definitions/contactInfo" }
+      },
+      "required": ["domain", "transfer_status", "premium_price", "whois_privacy", "registrant_contact"]
+    },
+    "contactInfo" : {
+      "properties": {
+        "org": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type":  "string" },
+        "address": { "type":  "string" },
+        "city": { "type":  "string" },
+        "state": { "type":  "string" },
+        "zip": { "type":  "string" },
+        "country": { "type":  "string" },
+        "phone": { "type":  "string" },
+        "extras": { "type": "string" }
+      },
+      "required": ["org", "name", "email", "address", "city", "state", "zip", "country", "phone"]
+    }
+  }
+}
