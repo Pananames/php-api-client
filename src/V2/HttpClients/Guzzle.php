@@ -41,14 +41,14 @@ class Guzzle extends HttpClient
     /**
      * Send request to API
      *
-     * @param string $resource API resource
-     * @param string $method Request method
-     * @param array $headers Request headers
-     * @param array $queryParams Request GET params
-     * @param array $bodyParams Request body params
+     * @param string $resource
+     * @param string $method
+     * @param array $headers
+     * @param array $queryParams
+     * @param array $bodyParams
      *
-     * @throws InvalidApiResponse
-     * @throws Exception
+     * @return \Psr\Http\Message\ResponseInterface
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function request(string $resource, string $method = 'GET', array $headers = [], array $queryParams = [], array $bodyParams = [])
     {

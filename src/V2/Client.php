@@ -5,6 +5,7 @@ namespace Pananames\Api\V2;
 use Pananames\Api\V2\Entities\Account;
 use Pananames\Api\V2\Entities\Other;
 use Pananames\Api\V2\Entities\TransferIn;
+use Pananames\Api\V2\Entities\TransferOut;
 use Pananames\Api\V2\HttpClients\HttpClient;
 
 class Client
@@ -28,6 +29,25 @@ class Client
      * @var TransferIn
      */
     public $transferInInstance;
+
+    /**
+     * @var TransferOut
+     */
+    public $transferOutInstance;
+
+    /**
+     * Create and return TransferOut instance
+     *
+     * @return TransferOut
+     */
+    public function transferOut(): TransferOut
+    {
+        if (!$this->transferOutInstance) {
+            $this->transferOutInstance = new TransferOut($this->httpClient);
+        }
+
+        return $this->transferOutInstance;
+    }
 
     /**
      * Create and return TransferIn instance
