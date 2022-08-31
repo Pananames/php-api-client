@@ -1,0 +1,28 @@
+{
+  "type": "array",
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": {
+          "type": { "$ref": "#/definitions/dnsRecord" }
+        }
+      }
+    }
+  },
+  "required": ["data"],
+  "definitions": {
+    "dnsRecord": {
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "type": { "type": "string" },
+        "value": { "type": "string" },
+        "priority": { "type": "integer" },
+        "ttl": { "type": "integer" }
+      }
+    },
+    "required": ["name", "type", "value"]
+  }
+}

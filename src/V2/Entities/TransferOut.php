@@ -13,7 +13,7 @@ class TransferOut extends Entity
      */
     public function initTransferOut(string $domain): bool
     {
-        $response = $this->httpClient->request($this->getResource($domain), 'PUT', [], [], ['domain' => $domain]);
+        $response = $this->httpClient->request($this->getResource($domain), 'PUT');
         $dataContents = $response->getBody()->getContents();
         $this->validate($response, $dataContents);
 
@@ -29,7 +29,7 @@ class TransferOut extends Entity
      */
     public function cancelTransferOut(string $domain): bool
     {
-        $response = $this->httpClient->request($this->getResource($domain), 'DELETE', [], [], ['domain' => $domain]);
+        $response = $this->httpClient->request($this->getResource($domain), 'DELETE');
         $dataContents = $response->getBody()->getContents();
         $this->validate($response, $dataContents);
 

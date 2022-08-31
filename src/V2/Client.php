@@ -3,6 +3,7 @@
 namespace Pananames\Api\V2;
 
 use Pananames\Api\V2\Entities\Account;
+use Pananames\Api\V2\Entities\NameServers;
 use Pananames\Api\V2\Entities\Other;
 use Pananames\Api\V2\Entities\TransferIn;
 use Pananames\Api\V2\Entities\TransferOut;
@@ -16,14 +17,14 @@ class Client
     const DEFAULT_API_URL = 'https://api.pananames.com/merchant/v2/';
 
     /**
-     * @var Account
+     * @var NameServers
      */
-    public $accountInstance;
+    public $nameServersInstance;
 
     /**
-     * @var Other
+     * @var TransferOut
      */
-    public $otherInstance;
+    public $transferOutInstance;
 
     /**
      * @var TransferIn
@@ -31,9 +32,24 @@ class Client
     public $transferInInstance;
 
     /**
-     * @var TransferOut
+     * @var Other
      */
-    public $transferOutInstance;
+    public $otherInstance;
+
+    /**
+     * @var Account
+     */
+    public $accountInstance;
+
+
+    public function nameServers(): NameServers
+    {
+        if (!$this->nameServersInstance) {
+            $this->nameServersInstance = new NameServers($this->httpClient);
+        }
+
+        return $this->nameServersInstance;
+    }
 
     /**
      * Create and return TransferOut instance
@@ -63,6 +79,18 @@ class Client
         return $this->transferInInstance;
     }
 
+    /**
+     *
+     * @return Other
+     */
+    public function other(): Other
+    {
+        if (!$this->otherInstance) {
+            $this->otherInstance = new Other($this->httpClient);
+        }
+
+        return $this->otherInstance;
+    }
 
     /**
      * Create and return Account instance
@@ -76,19 +104,6 @@ class Client
         }
 
         return $this->accountInstance;
-    }
-
-    /**
-     *
-     * @return Other
-     */
-    public function other(): Other
-    {
-        if (!$this->otherInstance) {
-            $this->otherInstance = new Other($this->httpClient);
-        }
-
-        return $this->otherInstance;
     }
 
     /**
