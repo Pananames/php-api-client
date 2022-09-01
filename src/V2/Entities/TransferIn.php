@@ -8,20 +8,21 @@ use Pananames\Api\V2\Response\TransferIn\TransfersListResponse;
 class TransferIn extends Entity
 {
     /**
-     * @param $currentPage
-     * @param $perPage
-     * @param $domainLike
-     * @param $status
+     * @param int $currentPage
+     * @param int $perPage
+     * @param string $domainLike
+     * @param string $status
      *
      * @return TransfersListResponse
      *
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Pananames\Api\Exceptions\InvalidApiResponse
      */
     public function getTransfersList(
-        $currentPage = '1',
-        $perPage = '30',
-        $domainLike = null,
-        $status = null
+        int $currentPage = 1,
+        int $perPage = 30,
+        string $domainLike = '',
+        string $status = ''
     ): TransfersListResponse {
 
         $response = $this->httpClient->request(
@@ -48,13 +49,14 @@ class TransferIn extends Entity
     }
 
     /**
-     * @param $data
+     * @param array $data
      *
      * @return BaseResponse
      *
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Pananames\Api\Exceptions\InvalidApiResponse
      */
-    public function initTransfetIn($data): BaseResponse
+    public function initTransfetIn(array $data): BaseResponse
     {
         $response = $this->httpClient->request('transfers_in', 'POST', [], [], $data);
 
