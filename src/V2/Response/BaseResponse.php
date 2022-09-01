@@ -18,13 +18,15 @@ class BaseResponse
         $this->setData($data);
     }
 
-    public function setHttpCode(int $code): bool
+    public function setHttpCode(int $code): self
     {
         if (empty($code)) {
             throw new InvalidArgumentException('Invalid HttpCode');
         }
 
-        return $this->httpCode = $code;
+        $this->httpCode = $code;
+
+        return $this;
     }
 
     public function getData(): array
@@ -52,7 +54,7 @@ class BaseResponse
             return false;
         }
 
-        if ($httpCode != 204 && is_null($this->getData())) {
+        if ($httpCode != 204 && empty($this->getData())) {
             return false;
         }
 
