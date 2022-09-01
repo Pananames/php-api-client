@@ -22,7 +22,7 @@ class Entity
 
     /**
      * @param ResponseInterface $response
-     * @param array $dataContents
+     * @param array|string $dataContents
      * @param string $schema
      *
      * @return void
@@ -30,9 +30,9 @@ class Entity
      * @throws InvalidApiResponse
      * @throws Exception
      */
-    public function validate(ResponseInterface $response, array $dataContents, string $schema = ''): void
+    public function validate(ResponseInterface $response, array|string $dataContents, string $schema = ''): void
     {
-        if (empty($dataContents)) {
+        if (is_array($dataContents) && empty($dataContents)) {
             throw new InvalidApiResponse;
         }
 
