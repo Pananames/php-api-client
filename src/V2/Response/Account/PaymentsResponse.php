@@ -13,7 +13,12 @@ class PaymentsResponse extends BaseResponse
         return $this->meta;
     }
 
-    public function setMeta($meta): self
+    /**
+     * @param array $meta
+     *
+     * @return $this
+     */
+    public function setMeta(array $meta): self
     {
         $this->meta = $meta;
 
