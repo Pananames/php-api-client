@@ -9,14 +9,14 @@ class HttpClient
      *
      * @var string
      */
-    public $signature;
+    public string $signature;
 
     /**
      * API Url
      *
      * @var string
      */
-    public $apiUrl;
+    public string $apiUrl;
 
     public function __construct(string $signature, string $apiUrl)
     {

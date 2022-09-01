@@ -9,5 +9,5 @@ class InvalidApiResponse extends Exception
     /**
      * @var string
      */
-    protected $message = 'Response does not contain valid JSON';
+    protected $message = 'Response does not contain valid JSON or empty';
 }

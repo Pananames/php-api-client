@@ -11,9 +11,9 @@ use Exception;
 class Entity
 {
     /**
-     * HTTP Client which using for API requests
+     * @var HttpClient
      */
-    public $httpClient;
+    public HttpClient $httpClient;
 
     public function __construct(HttpClient $httpClient)
     {
@@ -22,7 +22,7 @@ class Entity
 
     /**
      * @param ResponseInterface $response
-     * @param $dataContents
+     * @param array $dataContents
      * @param string $schema
      *
      * @return void
@@ -30,9 +30,9 @@ class Entity
      * @throws InvalidApiResponse
      * @throws Exception
      */
-    public function validate(ResponseInterface $response, $dataContents, string $schema = ''): void
+    public function validate(ResponseInterface $response, array $dataContents, string $schema = ''): void
     {
-        if (is_null($dataContents)) {
+        if (empty($dataContents)) {
             throw new InvalidApiResponse;
         }
 
