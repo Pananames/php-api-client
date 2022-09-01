@@ -49,6 +49,27 @@ class NameServers extends Entity
 
     /**
      * @param string $domain
+     * @param array $dnsRecord
+     *
+     * @return BaseResponse
+     *
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
+    public function updateDnsRecord(string $domain, array $dnsRecord): BaseResponse
+    {
+        $response = $this->httpClient->request($this->getDnsResource($domain), 'PUT', [], [], $dnsRecord);
+        $dataContents = json_decode($response->getBody()->getContents(), 1);
+
+        $this->validate($response, $dataContents, 'NameServers/DnsRecord');
+
+        $dnsRecordResponse = new BaseResponse($dataContents['data']);
+        $dnsRecordResponse->setHttpCode($response->getStatusCode());
+
+        return $dnsRecordResponse;
+    }
+
+    /**
+     * @param string $domain
      *
      * @return string
      */
