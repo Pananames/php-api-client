@@ -7,7 +7,7 @@ use Pananames\Api\V2\Entities\NameServers;
 use Pananames\Api\V2\Entities\Other;
 use Pananames\Api\V2\Entities\TransferIn;
 use Pananames\Api\V2\Entities\TransferOut;
-use Pananames\Api\V2\HttpClients\HttpClient;
+use Pananames\Api\V2\HttpClients\Guzzle;
 
 class Client
 {
@@ -107,11 +107,11 @@ class Client
     }
 
     /**
-     * @var HttpClient
+     * @var Guzzle
      */
-    public $httpClient;
+    public Guzzle $httpClient;
 
-    public function __construct(HttpClient $httpClient)
+    public function __construct(Guzzle $httpClient)
     {
         $this->httpClient = $httpClient;
     }

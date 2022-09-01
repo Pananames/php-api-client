@@ -3,7 +3,7 @@
 namespace Pananames\Api\V2\Entities;
 
 use Pananames\Api\Exceptions\InvalidApiResponse;
-use Pananames\Api\V2\HttpClients\HttpClient;
+use Pananames\Api\V2\HttpClients\Guzzle;
 use Pananames\Api\V2\Validator\Validator;
 use Psr\Http\Message\ResponseInterface;
 use Exception;
@@ -11,11 +11,11 @@ use Exception;
 class Entity
 {
     /**
-     * @var HttpClient
+     * @var Guzzle
      */
-    public HttpClient $httpClient;
+    public Guzzle $httpClient;
 
-    public function __construct(HttpClient $httpClient)
+    public function __construct(Guzzle $httpClient)
     {
         $this->httpClient = $httpClient;
     }

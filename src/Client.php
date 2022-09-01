@@ -4,6 +4,7 @@ namespace Pananames\Api;
 
 use Pananames\Api\Exceptions\InvalidApiVersion;
 use Pananames\Api\Exceptions\InvalidHttpClient;
+use Pananames\Api\V2\Client as ClientV2;
 
 class Client
 {
@@ -12,7 +13,9 @@ class Client
      * @param string|null $apiUrl
      * @param string $apiVersion
      * @param string $httpClient
-     * @return mixed
+     *
+     * @return ClientV2
+     *
      * @throws InvalidApiVersion
      * @throws InvalidHttpClient
      */
@@ -21,7 +24,7 @@ class Client
         string $apiUrl = null,
         string $apiVersion = 'v2',
         string $httpClient = 'guzzle'
-    ) {
+    ): ClientV2 {
         $clientClassname = __NAMESPACE__ . '\\' . ucfirst($apiVersion) . '\\Client';
         if (!class_exists($clientClassname)) {
             throw new InvalidApiVersion;
