@@ -2,8 +2,7 @@
 
 namespace Pananames\Api\V2\HttpClients;
 
-use Exception;
-use Pananames\Api\Exceptions\InvalidApiResponse;
+use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Client;
 
 class Guzzle extends HttpClient
@@ -47,11 +46,17 @@ class Guzzle extends HttpClient
      * @param array $queryParams
      * @param array $bodyParams
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return ResponseInterface
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function request(string $resource, string $method = 'GET', array $headers = [], array $queryParams = [], array $bodyParams = [])
-    {
+    public function request(
+        string $resource,
+        string $method = 'GET',
+        array $headers = [],
+        array $queryParams = [],
+        array $bodyParams = []
+    ): ResponseInterface {
         $options = [];
         if (!empty($headers)) {
             $options['headers'] = $headers;
