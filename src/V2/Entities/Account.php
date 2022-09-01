@@ -10,7 +10,7 @@ class Account extends Entity
     public function getBalance(): BalanceResponse
     {
         $response = $this->httpClient->request('account/balance', 'GET', []);
-        $dataContents = json_decode($response->getBody()->getContents(), 1);
+        $dataContents = json_decode($response->getBody()->getContents(), true);
 
         $this->validate($response, $dataContents, 'Account/Balance');
 
@@ -45,7 +45,7 @@ class Account extends Entity
             ]
         );
 
-        $dataContents = json_decode($response->getBody()->getContents(), 1);
+        $dataContents = json_decode($response->getBody()->getContents(), true);
 
         $this->validate($response, $dataContents, 'Account/Payments');
 

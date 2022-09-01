@@ -36,7 +36,7 @@ class TransferIn extends Entity
             ]
         );
 
-        $dataContents = json_decode($response->getBody()->getContents(), 1);
+        $dataContents = json_decode($response->getBody()->getContents(), true);
 
         $this->validate($response, $dataContents, 'TransferIn/TransfersList');
 
@@ -58,7 +58,7 @@ class TransferIn extends Entity
     {
         $response = $this->httpClient->request('transfers_in', 'POST', [], [], $data);
 
-        $dataContents = json_decode($response->getBody()->getContents(), 1);
+        $dataContents = json_decode($response->getBody()->getContents(), true);
 
         $this->validate($response, $dataContents, 'TransferIn/Transfer');
 

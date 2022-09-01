@@ -10,7 +10,7 @@ class Other extends Entity
     public function getNoticesList()
     {
         $response = $this->httpClient->request('add_req_list', 'GET', []);
-        $dataContents = json_decode($response->getBody()->getContents(), 1);
+        $dataContents = json_decode($response->getBody()->getContents(), true);
 
         $this->validate($response, $dataContents, 'Other/RegistrationNotices');
 
@@ -23,7 +23,7 @@ class Other extends Entity
     public function getTlds(): BaseResponse
     {
         $response = $this->httpClient->request('tlds', 'GET', []);
-        $dataContents = json_decode($response->getBody()->getContents(), 1);
+        $dataContents = json_decode($response->getBody()->getContents(), true);
 
         $this->validate($response, $dataContents, 'Other/Tlds');
 
@@ -53,7 +53,7 @@ class Other extends Entity
             ]
         );
 
-        $dataContents = json_decode($response->getBody()->getContents(), 1);
+        $dataContents = json_decode($response->getBody()->getContents(), true);
 
         $this->validate($response, $dataContents, 'Other/Emails');
 

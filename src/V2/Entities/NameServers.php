@@ -16,7 +16,7 @@ class NameServers extends Entity
     public function getDnsRecords(string $domain): BaseResponse
     {
         $response = $this->httpClient->request($this->getDnsResource($domain));
-        $dataContents = json_decode($response->getBody()->getContents(), 1);
+        $dataContents = json_decode($response->getBody()->getContents(), true);
 
         $this->validate($response, $dataContents, 'NameServers/DnsRecordsList');
 
@@ -37,7 +37,7 @@ class NameServers extends Entity
     public function createDnsRecord(string $domain, array $dnsRecords): BaseResponse
     {
         $response = $this->httpClient->request($this->getDnsResource($domain), 'POST', [], [], $dnsRecords);
-        $dataContents = json_decode($response->getBody()->getContents(), 1);
+        $dataContents = json_decode($response->getBody()->getContents(), true);
 
         $this->validate($response, $dataContents, 'NameServers/DnsRecord');
 
@@ -58,7 +58,7 @@ class NameServers extends Entity
     public function updateDnsRecord(string $domain, array $dnsRecord): BaseResponse
     {
         $response = $this->httpClient->request($this->getDnsResource($domain), 'PUT', [], [], $dnsRecord);
-        $dataContents = json_decode($response->getBody()->getContents(), 1);
+        $dataContents = json_decode($response->getBody()->getContents(), true);
 
         $this->validate($response, $dataContents, 'NameServers/DnsRecord');
 
