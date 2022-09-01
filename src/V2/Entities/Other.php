@@ -7,7 +7,13 @@ use Pananames\Api\V2\Response\BaseResponse;
 
 class Other extends Entity
 {
-    public function getNoticesList()
+    /**
+     * @return BaseResponse
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
+    public function getNoticesList(): BaseResponse
     {
         $response = $this->httpClient->request('add_req_list', 'GET', []);
         $dataContents = json_decode($response->getBody()->getContents(), true);
@@ -20,6 +26,11 @@ class Other extends Entity
         return $baseResponse;
     }
 
+    /**
+     * @return BaseResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
     public function getTlds(): BaseResponse
     {
         $response = $this->httpClient->request('tlds', 'GET', []);
@@ -33,6 +44,18 @@ class Other extends Entity
         return $baseResponse;
     }
 
+    /**
+     * @param int $currentPage
+     * @param int $perPage
+     * @param string $emailLike
+     * @param string $status
+     * @param string $emailStatus
+     *
+     * @return EmailsResponse
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
     public function getEmails(
         int $currentPage,
         int $perPage,
