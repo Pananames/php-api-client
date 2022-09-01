@@ -14,6 +14,83 @@ class NameServers extends Entity
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Pananames\Api\Exceptions\InvalidApiResponse
      */
+    public function getDnsServers(string $domain): BaseResponse
+    {
+        $response = $this->httpClient->request($this->getDnsServersResource($domain));
+        $dataContents = json_decode($response->getBody()->getContents(), true);
+
+        $this->validate($response, $dataContents, 'NameServers/DnsServersList');
+
+        $dnsServersResponse = new BaseResponse($dataContents['data']);
+        $dnsServersResponse->setHttpCode($response->getStatusCode());
+
+        return $dnsServersResponse;
+    }
+
+    /**
+     * @param string $domain
+     * @param string[] $nameServers
+     *
+     * @return BaseResponse
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
+    public function setDnsServers(string $domain, array $nameServers): BaseResponse
+    {
+        $response = $this->httpClient->request(
+            $this->getDnsServersResource($domain),
+            'PUT',
+            [],
+            [],
+            ['name_servers' => $nameServers]
+        );
+        $dataContents = json_decode($response->getBody()->getContents(), true);
+
+        $this->validate($response, $dataContents, 'NameServers/DnsServersList');
+
+        $dnsRecordsResponse = new BaseResponse($dataContents['data']);
+        $dnsRecordsResponse->setHttpCode($response->getStatusCode());
+
+        return $dnsRecordsResponse;
+    }
+
+    /**
+     * @param string $domain
+     *
+     * @return bool
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
+    public function deleteDnsServers(string $domain): bool
+    {
+        $response = $this->httpClient->request($this->getDnsServersResource($domain), 'DELETE');
+        $dataContents = $response->getBody()->getContents();
+
+        $this->validate($response, $dataContents);
+
+        return true;
+    }
+
+    /**
+     * @param string $domain
+     *
+     * @return string
+     */
+    private function getDnsServersResource(string $domain): string
+    {
+        return str_replace('{'.'domain'.'}', rawurlencode($domain), 'domains/{domain}/name_servers');
+    }
+
+    /**
+     * @param string $domain
+     *
+     * @return BaseResponse
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
     public function getChildDns(string $domain): BaseResponse
     {
         $response = $this->httpClient->request($this->getChildDnsResource($domain));
