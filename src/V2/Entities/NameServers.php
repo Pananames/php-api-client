@@ -14,6 +14,38 @@ class NameServers extends Entity
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Pananames\Api\Exceptions\InvalidApiResponse
      */
+    public function getChildDns(string $domain): BaseResponse
+    {
+        $response = $this->httpClient->request($this->getChildDnsResource($domain));
+        $dataContents = json_decode($response->getBody()->getContents(), true);
+
+        $this->validate($response, $dataContents, 'NameServers/ChildDnsList');
+
+        $dnsRecordsResponse = new BaseResponse($dataContents['data']);
+        $dnsRecordsResponse->setHttpCode($response->getStatusCode());
+
+        return $dnsRecordsResponse;
+    }
+
+    /**
+     * @param string $domain
+     *
+     * @return string
+     */
+    private function getChildDnsResource(string $domain): string
+    {
+        return str_replace('{'.'domain'.'}', rawurlencode($domain), 'domains/{domain}/child_name_servers');
+    }
+
+
+    /**
+     * @param string $domain
+     *
+     * @return BaseResponse
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
     public function getDnsRecords(string $domain): BaseResponse
     {
         $response = $this->httpClient->request($this->getDnsResource($domain));

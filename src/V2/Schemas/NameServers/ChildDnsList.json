@@ -1,0 +1,12 @@
+{
+  "type": "array",
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "type": { "$ref": "ChildDns.json" }
+      }
+    }
+  },
+  "required": ["data"]
+}
