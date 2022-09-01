@@ -29,6 +29,69 @@ class NameServers extends Entity
 
     /**
      * @param string $domain
+     * @param array $childDns
+     *
+     * @return BaseResponse
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
+    public function updateChildDns(string $domain, array $childDns): BaseResponse
+    {
+        $response = $this->httpClient->request($this->getChildDnsResource($domain), 'PUT', [], [], $childDns);
+        $dataContents = json_decode($response->getBody()->getContents(), true);
+
+        $this->validate($response, $dataContents, 'NameServers/ChildDns');
+
+        $dnsRecordsResponse = new BaseResponse($dataContents['data']);
+        $dnsRecordsResponse->setHttpCode($response->getStatusCode());
+
+        return $dnsRecordsResponse;
+    }
+
+    /**
+     * @param string $domain
+     * @param array $childDns
+     *
+     * @return BaseResponse
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
+    public function createChildDns(string $domain, array $childDns): BaseResponse
+    {
+        $response = $this->httpClient->request($this->getChildDnsResource($domain), 'POST', [], [], $childDns);
+        $dataContents = json_decode($response->getBody()->getContents(), true);
+
+        $this->validate($response, $dataContents, 'NameServers/ChildDns');
+
+        $dnsRecordsResponse = new BaseResponse($dataContents['data']);
+        $dnsRecordsResponse->setHttpCode($response->getStatusCode());
+
+        return $dnsRecordsResponse;
+    }
+
+    /**
+     * @param string $domain
+     * @param array $childDns
+     *
+     * @return bool
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
+    public function deleteChildDns(string $domain, array $childDns): bool
+    {
+        $response = $this->httpClient->request($this->getChildDnsResource($domain), 'DELETE', [], [], $childDns);
+        $dataContents = $response->getBody()->getContents();
+
+        $this->validate($response, $dataContents);
+
+        return true;
+    }
+
+    /**
+     * @param string $domain
      *
      * @return string
      */
