@@ -70,6 +70,24 @@ class NameServers extends Entity
 
     /**
      * @param string $domain
+     * @param array $dnsRecord
+     *
+     * @return bool
+     *
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
+    public function deleteDnsRecord(string $domain, array $dnsRecord): bool
+    {
+        $response = $this->httpClient->request($this->getDnsResource($domain), 'DELETE', [], [], $dnsRecord);
+        $dataContents = $response->getBody()->getContents();
+
+        $this->validate($response, $dataContents);
+
+        return true;
+    }
+
+    /**
+     * @param string $domain
      *
      * @return string
      */
