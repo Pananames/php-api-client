@@ -44,7 +44,7 @@ class Client
 
     public function nameServers(): NameServers
     {
-        if (!$this->nameServersInstance) {
+        if (!is_object($this->nameServersInstance)) {
             $this->nameServersInstance = new NameServers($this->httpClient);
         }
 
@@ -58,7 +58,7 @@ class Client
      */
     public function transferOut(): TransferOut
     {
-        if (!$this->transferOutInstance) {
+        if (!is_object($this->transferOutInstance)) {
             $this->transferOutInstance = new TransferOut($this->httpClient);
         }
 
@@ -72,7 +72,7 @@ class Client
      */
     public function transferIn(): TransferIn
     {
-        if (!$this->transferInInstance) {
+        if (!is_object($this->transferInInstance)) {
             $this->transferInInstance = new TransferIn($this->httpClient);
         }
 
@@ -85,7 +85,7 @@ class Client
      */
     public function other(): Other
     {
-        if (!$this->otherInstance) {
+        if (!is_object($this->otherInstance)) {
             $this->otherInstance = new Other($this->httpClient);
         }
 
@@ -99,7 +99,7 @@ class Client
      */
     public function account(): Account
     {
-        if (!$this->accountInstance) {
+        if (!is_object($this->accountInstance)) {
             $this->accountInstance = new Account($this->httpClient);
         }
 
