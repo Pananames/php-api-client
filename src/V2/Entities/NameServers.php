@@ -6,17 +6,45 @@ use Pananames\Api\V2\Response\BaseResponse;
 
 class NameServers extends Entity
 {
+    /**
+     * @param string $domain
+     *
+     * @return BaseResponse
+     *
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
     public function getDnsRecords(string $domain): BaseResponse
     {
-        $response = $this->httpClient->request($this->getResource($domain));
+        $response = $this->httpClient->request($this->getDnsResource($domain));
         $dataContents = json_decode($response->getBody()->getContents(), 1);
 
         $this->validate($response, $dataContents, 'NameServers/DnsRecordsList');
 
-        $nameServersResponse = new BaseResponse($dataContents['data']);
-        $nameServersResponse->setHttpCode($response->getStatusCode());
+        $dnsRecordsResponse = new BaseResponse($dataContents['data']);
+        $dnsRecordsResponse->setHttpCode($response->getStatusCode());
 
-        return $nameServersResponse;
+        return $dnsRecordsResponse;
+    }
+
+    /**
+     * @param string $domain
+     * @param array $dnsRecords
+     *
+     * @return BaseResponse
+     *
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
+    public function createDnsRecord(string $domain, array $dnsRecords): BaseResponse
+    {
+        $response = $this->httpClient->request($this->getDnsResource($domain), 'POST', [], [], $dnsRecords);
+        $dataContents = json_decode($response->getBody()->getContents(), 1);
+
+        $this->validate($response, $dataContents, 'NameServers/DnsRecord');
+
+        $dnsRecordResponse = new BaseResponse($dataContents['data']);
+        $dnsRecordResponse->setHttpCode($response->getStatusCode());
+
+        return $dnsRecordResponse;
     }
 
     /**
@@ -24,7 +52,7 @@ class NameServers extends Entity
      *
      * @return string
      */
-    private function getResource(string $domain): string
+    private function getDnsResource(string $domain): string
     {
         return str_replace('{'.'domain'.'}', rawurlencode($domain), 'domains/{domain}/name_server_records');
     }
