@@ -9,6 +9,7 @@ class TransferOut extends Entity
      *
      * @return bool
      *
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Pananames\Api\Exceptions\InvalidApiResponse
      */
     public function initTransferOut(string $domain): bool
@@ -25,6 +26,7 @@ class TransferOut extends Entity
      *
      * @return bool
      *
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Pananames\Api\Exceptions\InvalidApiResponse
      */
     public function cancelTransferOut(string $domain): bool
