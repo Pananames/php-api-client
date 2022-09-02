@@ -325,4 +325,75 @@ class NameServers extends Entity
     {
         return str_replace('{'.'domain'.'}', rawurlencode($domain), 'domains/{domain}/bulk_name_server_records');
     }
+
+    /**
+     * @param string $domain
+     *
+     * @return BaseResponse
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
+    public function getDnsSec(string $domain): BaseResponse
+    {
+        $response = $this->httpClient->request($this->getDnsSecResource($domain));
+        $dataContents = json_decode($response->getBody()->getContents(), true);
+
+        $this->validate($response, $dataContents, 'NameServers/DnsSec');
+
+        $dnsSecResponse = new BaseResponse($dataContents['data']);
+        $dnsSecResponse->setHttpCode($response->getStatusCode());
+
+        return $dnsSecResponse;
+    }
+
+    /**
+     * @param string $domain
+     * @param string $dsData
+     *
+     * @return BaseResponse
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
+    public function setDnsSec(string $domain, string $dsData): BaseResponse
+    {
+        $response = $this->httpClient->request($this->getDnsSecResource($domain), 'PUT', [], [], ['ds' => $dsData]);
+        $dataContents = json_decode($response->getBody()->getContents(), true);
+
+        $this->validate($response, $dataContents, 'NameServers/DnsSec');
+
+        $dnsSecResponse = new BaseResponse($dataContents['data']);
+        $dnsSecResponse->setHttpCode($response->getStatusCode());
+
+        return $dnsSecResponse;
+    }
+
+    /**
+     * @param string $domain
+     *
+     * @return bool
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
+    public function deleteDnsSec(string $domain): bool
+    {
+        $response = $this->httpClient->request($this->getDnsSecResource($domain), 'DELETE');
+        $dataContents = $response->getBody()->getContents();
+
+        $this->validate($response, $dataContents);
+
+        return true;
+    }
+
+    /**
+     * @param string $domain
+     *
+     * @return string
+     */
+    private function getDnsSecResource(string $domain): string
+    {
+        return str_replace('{'.'domain'.'}', rawurlencode($domain), 'domains/{domain}/dnssec');
+    }
 }
