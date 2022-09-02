@@ -1,0 +1,13 @@
+{
+  "type": "array",
+  "properties": {
+    "data": {
+      "type": "array",
+      "properties": {
+        "enabled_dnssec": { "type": "boolean" }
+      },
+      "required": ["enabled_dnssec"]
+    }
+  },
+  "required": ["data"]
+}

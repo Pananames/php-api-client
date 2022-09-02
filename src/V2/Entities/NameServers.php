@@ -396,4 +396,26 @@ class NameServers extends Entity
     {
         return str_replace('{'.'domain'.'}', rawurlencode($domain), 'domains/{domain}/dnssec');
     }
+
+    /**
+     * @param string $domain
+     *
+     * @return BaseResponse
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
+    public function getEnabledDnsSecFlag(string $domain): BaseResponse
+    {
+        $resourse = str_replace('{'.'domain'.'}', rawurlencode($domain), 'domains/{domain}/enabled_dnssec_flag');
+        $response = $this->httpClient->request($resourse);
+        $dataContents = json_decode($response->getBody()->getContents(), true);
+
+        $this->validate($response, $dataContents, 'NameServers/DnsSecFlag');
+
+        $enabledDnsSecResponse = new BaseResponse($dataContents['data']);
+        $enabledDnsSecResponse->setHttpCode($response->getStatusCode());
+
+        return $enabledDnsSecResponse;
+    }
 }
