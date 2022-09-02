@@ -2,9 +2,8 @@
 
 namespace Pananames\Api\V2\Validator;
 
-use _PHPStan_9a6ded56a\Nette\Neon\Exception;
 use JsonSchema\Validator as JsonValidator;
-
+use Exception;
 
 class Validator
 {

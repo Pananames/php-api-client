@@ -5,6 +5,7 @@ namespace Pananames\Api\V2;
 use Pananames\Api\V2\Entities\Account;
 use Pananames\Api\V2\Entities\NameServers;
 use Pananames\Api\V2\Entities\Other;
+use Pananames\Api\V2\Entities\Redirect;
 use Pananames\Api\V2\Entities\TransferIn;
 use Pananames\Api\V2\Entities\TransferOut;
 use Pananames\Api\V2\HttpClients\Guzzle;
@@ -15,6 +16,11 @@ class Client
      * Default endpoint for API v2
      */
     const DEFAULT_API_URL = 'https://api.pananames.com/merchant/v2/';
+
+    /**
+     * @var Redirect
+     */
+    public $redirectInstance;
 
     /**
      * @var NameServers
@@ -40,6 +46,25 @@ class Client
      * @var Account
      */
     public $accountInstance;
+
+    /**
+     * @var Guzzle
+     */
+    public Guzzle $httpClient;
+
+    public function __construct(Guzzle $httpClient)
+    {
+        $this->httpClient = $httpClient;
+    }
+
+    public function redirect(): Redirect
+    {
+        if (!is_object($this->redirectInstance)) {
+            $this->redirectInstance = new Redirect($this->httpClient);
+        }
+
+        return $this->redirectInstance;
+    }
 
 
     public function nameServers(): NameServers
@@ -104,15 +129,5 @@ class Client
         }
 
         return $this->accountInstance;
-    }
-
-    /**
-     * @var Guzzle
-     */
-    public Guzzle $httpClient;
-
-    public function __construct(Guzzle $httpClient)
-    {
-        $this->httpClient = $httpClient;
     }
 }

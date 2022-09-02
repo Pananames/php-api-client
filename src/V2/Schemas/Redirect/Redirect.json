@@ -1,0 +1,17 @@
+{
+  "type": "array",
+  "properties": {
+    "data": {
+      "type": "array",
+      "properties": {
+        "url": { "type": "string" },
+        "masking_enabled": { "type": "boolean" },
+        "masking_title": { "type": "string" },
+        "masking_desc": { "type": "string" },
+        "masking_kwd": { "type": "string" }
+      },
+      "required": ["url", "masking_enabled"]
+    }
+  },
+  "required": ["data"]
+}
