@@ -129,5 +129,25 @@ class Domains extends Entity
         return $checkResponse;
     }
 
+    /**
+     * @param string $domain
+     *
+     * @return BaseResponse
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
+    public function getAddReq(string $domain): BaseResponse
+    {
+        $response = $this->httpClient->request('domains/' . rawurlencode($domain) . '/add_req');
 
+        $dataContents = json_decode($response->getBody()->getContents(), true);
+
+        $this->validate($response, $dataContents, 'Domains/AddReq');
+
+        $addReqResponse = new BaseResponse($dataContents);
+        $addReqResponse->setHttpCode($response->getStatusCode());
+
+        return $addReqResponse;
+    }
 }

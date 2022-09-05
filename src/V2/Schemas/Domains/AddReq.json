@@ -1,0 +1,15 @@
+{
+  "type": "array",
+  "properties": {
+    "tld": {
+      "type": "string"
+    },
+    "notices": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": ["tld", "notices"]
+}
