@@ -1,0 +1,15 @@
+{
+  "type": "array",
+  "properties": {
+    "meta": {
+      "$ref": "../MetaInfo.json"
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "Domain.json"
+      }
+    }
+  },
+  "required": ["data", "meta"]
+}

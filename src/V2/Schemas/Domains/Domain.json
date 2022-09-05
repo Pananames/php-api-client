@@ -1,0 +1,36 @@
+{
+  "type": "array",
+  "properties": {
+    "domain": { "type": "string" },
+    "premium": { "type": "boolean" },
+    "auto_renew": { "type": "boolean" },
+    "whois_privacy": { "type": "boolean" },
+    "lock_status": { "enum": ["unlocked", "client", "registrar", "registry"] },
+    "registration_date": { "type": "string", "format" : "date-time" },
+    "expiration_date": { "type": "string", "format" : "date-time" },
+    "deletion_date": { "type": "string", "format" : "date" },
+    "status": { "enum": ["ok", "transfer out ready", "transferring out", "expired", "redemption", "suspended"] },
+    "name_servers": {
+      "type":  "array",
+      "items": {
+        "type": "string"
+      },
+      "minContains": 2,
+      "maxContains": 10
+    },
+    "child_name_servers": {
+      "type": { "$ref": "../NameServers/ChildDns.json" }
+    }
+  },
+  "required": [
+    "domain",
+    "premium",
+    "auto_renew",
+    "whois_privacy",
+    "lock_status",
+    "registration_date",
+    "expiration_date",
+    "status",
+    "name_servers"
+  ]
+}

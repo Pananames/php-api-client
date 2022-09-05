@@ -3,6 +3,7 @@
 namespace Pananames\Api\V2;
 
 use Pananames\Api\V2\Entities\Account;
+use Pananames\Api\V2\Entities\Domains;
 use Pananames\Api\V2\Entities\NameServers;
 use Pananames\Api\V2\Entities\Other;
 use Pananames\Api\V2\Entities\Redirect;
@@ -17,6 +18,11 @@ class Client
      * Default endpoint for API v2
      */
     const DEFAULT_API_URL = 'https://api.pananames.com/merchant/v2/';
+
+    /**
+     * @var Domains
+     */
+    public $domainsInstance;
 
     /**
      * @var Whois
@@ -63,6 +69,21 @@ class Client
         $this->httpClient = $httpClient;
     }
 
+    /**
+     * @return Domains
+     */
+    public function domains(): Domains
+    {
+        if (!is_object($this->domainsInstance)) {
+            $this->domainsInstance = new Domains($this->httpClient);
+        }
+
+        return $this->domainsInstance;
+    }
+
+    /**
+     * @return Whois
+     */
     public function whois(): Whois
     {
         if (!is_object($this->whoisInstance)) {
@@ -72,6 +93,9 @@ class Client
         return $this->whoisInstance;
     }
 
+    /**
+     * @return Redirect
+     */
     public function redirect(): Redirect
     {
         if (!is_object($this->redirectInstance)) {
@@ -81,7 +105,9 @@ class Client
         return $this->redirectInstance;
     }
 
-
+    /**
+     * @return NameServers
+     */
     public function nameServers(): NameServers
     {
         if (!is_object($this->nameServersInstance)) {
