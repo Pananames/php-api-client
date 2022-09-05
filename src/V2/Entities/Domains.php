@@ -63,6 +63,28 @@ class Domains extends Entity
     /**
      * @param string $domain
      *
+     * @return BaseResponse
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
+    public function getInfo(string $domain): BaseResponse
+    {
+        $response = $this->httpClient->request('domains/' . rawurlencode($domain));
+
+        $dataContents = json_decode($response->getBody()->getContents(), true);
+
+        $this->validate($response, $dataContents, 'Domains/Domain');
+
+        $domainInfoResponse = new BaseResponse($dataContents['data']);
+        $domainInfoResponse->setHttpCode($response->getStatusCode());
+
+        return $domainInfoResponse;
+    }
+
+    /**
+     * @param string $domain
+     *
      * @return bool
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
