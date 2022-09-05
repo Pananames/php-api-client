@@ -8,6 +8,7 @@ use Pananames\Api\V2\Entities\Other;
 use Pananames\Api\V2\Entities\Redirect;
 use Pananames\Api\V2\Entities\TransferIn;
 use Pananames\Api\V2\Entities\TransferOut;
+use Pananames\Api\V2\Entities\Whois;
 use Pananames\Api\V2\HttpClients\Guzzle;
 
 class Client
@@ -16,6 +17,11 @@ class Client
      * Default endpoint for API v2
      */
     const DEFAULT_API_URL = 'https://api.pananames.com/merchant/v2/';
+
+    /**
+     * @var Whois
+     */
+    public $whoisInstance;
 
     /**
      * @var Redirect
@@ -55,6 +61,15 @@ class Client
     public function __construct(Guzzle $httpClient)
     {
         $this->httpClient = $httpClient;
+    }
+
+    public function whois(): Whois
+    {
+        if (!is_object($this->whoisInstance)) {
+            $this->whoisInstance = new Whois($this->httpClient);
+        }
+
+        return $this->whoisInstance;
     }
 
     public function redirect(): Redirect

@@ -1,0 +1,16 @@
+{
+  "type": "array",
+  "properties": {
+    "org": { "type": "string" },
+    "name": { "type": "string" },
+    "email": { "type":  "string" },
+    "address": { "type":  "string" },
+    "city": { "type":  "string" },
+    "state": { "type":  "string" },
+    "zip": { "type":  "string" },
+    "country": { "type":  "string" },
+    "phone": { "type":  "string" },
+    "extras": { "type": "array" }
+  },
+  "required": ["org", "name", "email", "address", "city", "state", "zip", "country", "phone"]
+}

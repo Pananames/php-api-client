@@ -1,0 +1,18 @@
+{
+  "type": "array",
+  "properties": {
+    "data": {
+      "type": "array",
+      "properties": {
+        "whois_privacy": { "type": "boolean" },
+        "preview": { "type": "boolean" },
+        "registrant_contact": { "$ref": "ContactInfo.json" },
+        "admin_contact": { "$ref": "ContactInfo.json" },
+        "tech_contact": { "$ref": "ContactInfo.json" },
+        "billing_contact": { "$ref": "ContactInfo.json" }
+      },
+      "required": ["registrant_contact", "admin_contact", "tech_contact", "billing_contact"]
+    }
+  },
+  "required": ["data"]
+}

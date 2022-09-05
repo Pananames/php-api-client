@@ -12,8 +12,10 @@ class Guzzle extends HttpClient
 
     /**
      * Guzzle client
+     *
+     * @var Client
      */
-    public $client;
+    public Client $client;
 
     public function __construct(string $signature, string $apiUrl, callable $handler = null)
     {
