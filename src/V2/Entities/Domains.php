@@ -2,6 +2,7 @@
 
 namespace Pananames\Api\V2\Entities;
 
+use Pananames\Api\V2\Response\BaseResponse;
 use Pananames\Api\V2\Response\MetaResponse;
 
 class Domains extends Entity
@@ -35,5 +36,52 @@ class Domains extends Entity
         $domainsListResponse->setMeta($dataContents['meta']);
 
         return $domainsListResponse;
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     *
+     * @return BaseResponse
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
+    public function register(array $data): BaseResponse
+    {
+        $response = $this->httpClient->request('domains', 'POST', [], [], $data);
+
+        $dataContents = json_decode($response->getBody()->getContents(), true);
+
+        $this->validate($response, $dataContents, 'Domains/Domain');
+
+        $domainResponse = new BaseResponse($dataContents['data']);
+        $domainResponse->setHttpCode($response->getStatusCode());
+
+        return $domainResponse;
+    }
+
+    /**
+     * @param string $domain
+     *
+     * @return bool
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
+    public function delete(string $domain): bool
+    {
+        $response = $this->httpClient->request(
+            'domains/' . rawurlencode($domain),
+            'DELETE',
+            [],
+            [],
+            ['domain' => $domain]
+        );
+
+        $dataContents = $response->getBody()->getContents();
+
+        $this->validate($response, $dataContents);
+
+        return true;
     }
 }
