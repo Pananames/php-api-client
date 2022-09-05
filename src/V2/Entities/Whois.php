@@ -59,4 +59,77 @@ class Whois extends Entity
     {
         return str_replace('{'.'domain'.'}', rawurlencode($domain), 'domains/{domain}/whois');
     }
+
+    /**
+     * @param string $domain
+     *
+     * @return BaseResponse
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
+    public function getWhoisPrivacy(string $domain): BaseResponse
+    {
+        $response = $this->httpClient->request($this->getWhoisPrivacyResource($domain));
+        $dataContents = json_decode($response->getBody()->getContents(), true);
+
+        $this->validate($response, $dataContents, 'Whois/WhoisPrivacy');
+
+        $whoisPrivacyResponse = new BaseResponse($dataContents['data']);
+        $whoisPrivacyResponse->setHttpCode($response->getStatusCode());
+
+        return $whoisPrivacyResponse;
+    }
+
+    /**
+     * @param string $domain
+     *
+     * @return BaseResponse
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
+    public function enableWhoisPrivacy(string $domain): BaseResponse
+    {
+        $response = $this->httpClient->request($this->getWhoisPrivacyResource($domain), 'PUT');
+        $dataContents = json_decode($response->getBody()->getContents(), true);
+
+        $this->validate($response, $dataContents, 'Whois/WhoisPrivacy');
+
+        $whoisPrivacyResponse = new BaseResponse($dataContents['data']);
+        $whoisPrivacyResponse->setHttpCode($response->getStatusCode());
+
+        return $whoisPrivacyResponse;
+    }
+
+    /**
+     * @param string $domain
+     *
+     * @return BaseResponse
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
+    public function disableWhoisPrivacy(string $domain): BaseResponse
+    {
+        $response = $this->httpClient->request($this->getWhoisPrivacyResource($domain), 'DELETE');
+        $dataContents = json_decode($response->getBody()->getContents(), true);
+
+        $this->validate($response, $dataContents, 'Whois/WhoisPrivacy');
+
+        $whoisPrivacyResponse = new BaseResponse($dataContents['data']);
+        $whoisPrivacyResponse->setHttpCode($response->getStatusCode());
+
+        return $whoisPrivacyResponse;
+    }
+
+    /**
+     * @param string $domain
+     *
+     * @return string
+     */
+    private function getWhoisPrivacyResource(string $domain): string
+    {
+        return str_replace('{'.'domain'.'}', rawurlencode($domain), 'domains/{domain}/whois_privacy');
+    }
 }

@@ -1,0 +1,14 @@
+{
+  "type": "array",
+  "properties": {
+    "data": {
+      "type": "array",
+      "properties": {
+        "domain": { "type": "string" },
+        "enabled": { "type": "boolean" }
+      },
+      "required": ["domain", "enabled"]
+    }
+  },
+  "required": ["data"]
+}
