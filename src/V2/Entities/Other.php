@@ -2,8 +2,8 @@
 
 namespace Pananames\Api\V2\Entities;
 
-use Pananames\Api\V2\Response\Other\EmailsResponse;
 use Pananames\Api\V2\Response\BaseResponse;
+use Pananames\Api\V2\Response\MetaResponse;
 
 class Other extends Entity
 {
@@ -51,7 +51,7 @@ class Other extends Entity
      * @param string $status
      * @param string $emailStatus
      *
-     * @return EmailsResponse
+     * @return MetaResponse
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Pananames\Api\Exceptions\InvalidApiResponse
@@ -62,7 +62,7 @@ class Other extends Entity
         string $emailLike,
         string $status,
         string $emailStatus
-    ): EmailsResponse {
+    ): MetaResponse {
         $response = $this->httpClient->request(
             'emails',
             'GET',
@@ -80,7 +80,7 @@ class Other extends Entity
 
         $this->validate($response, $dataContents, 'Other/Emails');
 
-        $emailsResponse = new EmailsResponse($dataContents['data']);
+        $emailsResponse = new MetaResponse($dataContents['data']);
         $emailsResponse->setHttpCode($response->getStatusCode());
         $emailsResponse->setMeta($dataContents['meta']);
 
