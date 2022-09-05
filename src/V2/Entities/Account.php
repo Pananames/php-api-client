@@ -3,10 +3,16 @@
 namespace Pananames\Api\V2\Entities;
 
 use Pananames\Api\V2\Response\Account\BalanceResponse;
-use Pananames\Api\V2\Response\Account\PaymentsResponse;
+use Pananames\Api\V2\Response\MetaResponse;
 
 class Account extends Entity
 {
+    /**
+     * @return BalanceResponse
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
     public function getBalance(): BalanceResponse
     {
         $response = $this->httpClient->request('account/balance', 'GET', []);
@@ -20,6 +26,20 @@ class Account extends Entity
         return $balanceResponse;
     }
 
+    /**
+     * @param int $currentPage
+     * @param int $perPage
+     * @param int|null $id
+     * @param string $payType
+     * @param string $domainLike
+     * @param string $dateFrom
+     * @param string $dateEnd
+     *
+     * @return MetaResponse
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
     public function getPayments(
         int $currentPage = 1,
         int $perPage = 30,
@@ -28,7 +48,7 @@ class Account extends Entity
         string $domainLike = '',
         string $dateFrom = '',
         string $dateEnd = ''
-    ): PaymentsResponse {
+    ): MetaResponse {
 
         $response = $this->httpClient->request(
             'account/payments',
@@ -49,7 +69,7 @@ class Account extends Entity
 
         $this->validate($response, $dataContents, 'Account/Payments');
 
-        $paymentsResponse = new PaymentsResponse($dataContents['data']);
+        $paymentsResponse = new MetaResponse($dataContents['data']);
         $paymentsResponse->setHttpCode($response->getStatusCode());
         $paymentsResponse->setMeta($dataContents['meta']);
 
