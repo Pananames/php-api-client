@@ -106,4 +106,28 @@ class Domains extends Entity
 
         return $checkResponse;
     }
+
+    /**
+     * @param string[] $domains
+     *
+     * @return BaseResponse
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
+    public function bulkCheck(array $domains): BaseResponse
+    {
+        $response = $this->httpClient->request('domains/bulk_check', 'GET', [], ['domains' => implode(',', $domains)]);
+
+        $dataContents = json_decode($response->getBody()->getContents(), true);
+
+        $this->validate($response, $dataContents, 'Domains/BulkCheck');
+
+        $checkResponse = new BaseResponse($dataContents['data']);
+        $checkResponse->setHttpCode($response->getStatusCode());
+
+        return $checkResponse;
+    }
+
+
 }

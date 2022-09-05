@@ -1,0 +1,12 @@
+{
+  "type": "array",
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "type": { "$ref": "Check.json" }
+      }
+    }
+  },
+  "required": ["data"]
+}

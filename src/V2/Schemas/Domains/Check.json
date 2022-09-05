@@ -14,5 +14,6 @@
     },
     "claim": { "type": "boolean" },
     "add_req": { "type": "boolean" }
-  }
+  },
+  "required": ["domain", "available", "premium", "prices", "claim", "add_req"]
 }
