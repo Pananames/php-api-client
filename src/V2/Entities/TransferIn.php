@@ -3,7 +3,7 @@
 namespace Pananames\Api\V2\Entities;
 
 use Pananames\Api\V2\Response\BaseResponse;
-use Pananames\Api\V2\Response\TransferIn\TransfersListResponse;
+use Pananames\Api\V2\Response\MetaResponse;
 
 class TransferIn extends Entity
 {
@@ -13,7 +13,7 @@ class TransferIn extends Entity
      * @param string $domainLike
      * @param string $status
      *
-     * @return TransfersListResponse
+     * @return MetaResponse
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Pananames\Api\Exceptions\InvalidApiResponse
@@ -23,7 +23,7 @@ class TransferIn extends Entity
         int $perPage = 30,
         string $domainLike = '',
         string $status = ''
-    ): TransfersListResponse {
+    ): MetaResponse {
 
         $response = $this->httpClient->request(
             'transfers_in',
@@ -41,7 +41,7 @@ class TransferIn extends Entity
 
         $this->validate($response, $dataContents, 'TransferIn/TransfersList');
 
-        $transfersListResponse = new TransfersListResponse($dataContents['data']);
+        $transfersListResponse = new MetaResponse($dataContents['data']);
         $transfersListResponse->setHttpCode($response->getStatusCode());
         $transfersListResponse->setMeta($dataContents['meta']);
 
