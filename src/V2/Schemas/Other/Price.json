@@ -1,0 +1,11 @@
+{
+  "type": "array",
+  "properties": {
+    "currency": { "enum": ["usd", "eur"] },
+    "register": { "type": "number" },
+    "renew": { "type": "number" },
+    "transfer": { "type": "number" },
+    "redeem": { "type": "number" }
+  },
+  "required": ["currency", "register", "renew", "transfer", "redeem"]
+}

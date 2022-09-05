@@ -15,13 +15,13 @@
         "tld": { "type": "string" },
         "idn": { "type": "boolean" },
         "dnssec": { "type": "boolean" },
-        "prices": { "$ref": "#/definitions/price" },
-        "promo_prices": { "$ref": "#/definitions/price" },
+        "prices": { "$ref": "Price.json" },
+        "promo_prices": { "$ref": "Price.json" },
         "promo_untill": {
           "type": "string",
           "format" : "date-time"
         },
-        "promo_two_years_prices": { "$ref": "#/definitions/price" },
+        "promo_two_years_prices": { "$ref": "Price.json" },
         "promo_two_years_untill": {
           "type": "string",
           "format" : "date-time"
@@ -29,7 +29,7 @@
         "promo_multi_years_prices": {
           "type": "array",
           "properties": {
-            "promo_multi_years_prices": { "$ref": "#/definitions/price" },
+            "promo_multi_years_prices": { "$ref": "Price.json" },
             "promo_multi_years_untill": {
               "type": "string",
               "format" : "date-time"
@@ -38,17 +38,6 @@
         }
       },
       "required": ["tld", "prices", "idn", "dnssec"]
-    },
-    "price": {
-      "type": "array",
-      "properties": {
-        "currency": { "enum": ["usd", "eur"] },
-        "register": { "type": "number" },
-        "renew": { "type": "number" },
-        "transfer": { "type": "number" },
-        "redeem": { "type": "number" }
-      },
-      "required": ["currency", "register", "renew", "transfer", "redeem"]
     }
   }
 }

@@ -84,4 +84,26 @@ class Domains extends Entity
 
         return true;
     }
+
+    /**
+     * @param string $domain
+     *
+     * @return BaseResponse
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
+    public function check(string $domain): BaseResponse
+    {
+        $response = $this->httpClient->request('domains/' . rawurlencode($domain) . '/check');
+
+        $dataContents = json_decode($response->getBody()->getContents(), true);
+
+        $this->validate($response, $dataContents, 'Domains/Check');
+
+        $checkResponse = new BaseResponse($dataContents['data']);
+        $checkResponse->setHttpCode($response->getStatusCode());
+
+        return $checkResponse;
+    }
 }

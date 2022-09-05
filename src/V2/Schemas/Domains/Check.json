@@ -1,0 +1,18 @@
+{
+  "type": "array",
+  "properties": {
+    "domain": { "type": "string" },
+    "domain_idn": { "type": "string" },
+    "available": { "type": "boolean" },
+    "premium": { "type": "boolean" },
+    "prices": { "$ref": "../Other/Price.json" },
+    "promo_prices": { "$ref": "../Other/Price.json" },
+    "promo_two_years_prices": { "$ref": "../Other/Price.json" },
+    "promo_multi_years_prices": {
+      "type": "array",
+      "items": { "$ref": "../Other/Price.json" }
+    },
+    "claim": { "type": "boolean" },
+    "add_req": { "type": "boolean" }
+  }
+}
