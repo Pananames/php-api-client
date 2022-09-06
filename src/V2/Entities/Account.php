@@ -2,25 +2,25 @@
 
 namespace Pananames\Api\V2\Entities;
 
-use Pananames\Api\V2\Response\Account\BalanceResponse;
+use Pananames\Api\V2\Response\BaseResponse;
 use Pananames\Api\V2\Response\MetaResponse;
 
 class Account extends Entity
 {
     /**
-     * @return BalanceResponse
+     * @return BaseResponse
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Pananames\Api\Exceptions\InvalidApiResponse
      */
-    public function getBalance(): BalanceResponse
+    public function getBalance(): BaseResponse
     {
         $response = $this->httpClient->request('account/balance', 'GET', []);
         $dataContents = json_decode($response->getBody()->getContents(), true);
 
         $this->validate($response, $dataContents, 'Account/Balance');
 
-        $balanceResponse = new BalanceResponse($dataContents['data']);
+        $balanceResponse = new BaseResponse($dataContents['data']);
         $balanceResponse->setHttpCode($response->getStatusCode());
 
         return $balanceResponse;
