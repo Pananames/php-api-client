@@ -194,4 +194,26 @@ class Domains extends Entity
 
         return $claimResponse;
     }
+
+    /**
+     * @param string $domain
+     *
+     * @return BaseResponse
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
+    public function getStatusCodes(string $domain): BaseResponse
+    {
+        $response = $this->httpClient->request('domains/' . rawurlencode($domain) . '/status_codes');
+
+        $dataContents = json_decode($response->getBody()->getContents(), true);
+
+        $this->validate($response, $dataContents, 'Domains/StatusCodes');
+
+        $statusResponse = new BaseResponse($dataContents);
+        $statusResponse->setHttpCode($response->getStatusCode());
+
+        return $statusResponse;
+    }
 }
