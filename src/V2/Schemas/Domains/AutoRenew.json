@@ -1,0 +1,14 @@
+{
+  "type": "array",
+  "properties": {
+    "data": {
+      "type": "array",
+      "properties": {
+        "domain": { "type": "string" },
+        "auto_renew": { "type": "boolean" }
+      },
+      "required": ["domain", "auto_renew"]
+    }
+  },
+  "required": ["data"]
+}

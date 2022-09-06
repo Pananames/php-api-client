@@ -216,4 +216,48 @@ class Domains extends Entity
 
         return $statusResponse;
     }
+
+    /**
+     * @param string $domain
+     *
+     * @return BaseResponse
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
+    public function enableAutoRenew(string $domain): BaseResponse
+    {
+        $response = $this->httpClient->request('domains/' . rawurlencode($domain) . '/auto_renew', 'PUT');
+
+        $dataContents = json_decode($response->getBody()->getContents(), true);
+
+        $this->validate($response, $dataContents, 'Domains/AutoRenew');
+
+        $autoRenewResponse = new BaseResponse($dataContents);
+        $autoRenewResponse->setHttpCode($response->getStatusCode());
+
+        return $autoRenewResponse;
+    }
+
+    /**
+     * @param string $domain
+     *
+     * @return BaseResponse
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
+    public function disableAutoRenew(string $domain): BaseResponse
+    {
+        $response = $this->httpClient->request('domains/' . rawurlencode($domain) . '/auto_renew', 'DELETE');
+
+        $dataContents = json_decode($response->getBody()->getContents(), true);
+
+        $this->validate($response, $dataContents, 'Domains/AutoRenew');
+
+        $autoRenewResponse = new BaseResponse($dataContents);
+        $autoRenewResponse->setHttpCode($response->getStatusCode());
+
+        return $autoRenewResponse;
+    }
 }
