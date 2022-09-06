@@ -172,4 +172,26 @@ class Domains extends Entity
 
         return $addReqResponse;
     }
+
+    /**
+     * @param string $domain
+     *
+     * @return BaseResponse
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
+    public function getClaim(string $domain): BaseResponse
+    {
+        $response = $this->httpClient->request('domains/' . rawurlencode($domain) . '/claim');
+
+        $dataContents = json_decode($response->getBody()->getContents(), true);
+
+        $this->validate($response, $dataContents, 'Domains/Claim');
+
+        $claimResponse = new BaseResponse($dataContents);
+        $claimResponse->setHttpCode($response->getStatusCode());
+
+        return $claimResponse;
+    }
 }

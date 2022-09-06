@@ -1,0 +1,45 @@
+{
+  "type": "array",
+  "properties": {
+    "data": {
+      "type": "array",
+      "properties": {
+        "trade_mark": { "type": "string" },
+        "jurisdiction": { "type": "string" },
+        "jurisdiction_country_code": { "type": "string" },
+        "goods": { "type": "string" },
+        "registrant_contact": { "$ref": "#/definitions/claimContact" },
+        "agent_contact": { "$ref": "#/definitions/claimContact" },
+        "description": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "required": [
+        "trade_mark",
+        "jurisdiction",
+        "jurisdiction_country_code",
+        "goods", "registrant_contact",
+        "agent_contact",
+        "description"
+      ]
+    }
+  },
+  "required": ["data"],
+  "definitions": {
+    "claimContact": {
+      "properties": {
+        "organization": { "type": "string" },
+        "name": { "type": "string" },
+        "street": { "type": "string" },
+        "state": { "type": "string" },
+        "city": { "type": "string" },
+        "zip": { "type": "string" },
+        "country_code": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" }
+      },
+      "required": ["organization"]
+    }
+  }
+}
