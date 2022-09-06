@@ -260,4 +260,68 @@ class Domains extends Entity
 
         return $autoRenewResponse;
     }
+
+    /**
+     * @param string $domain
+     * @param array<string, int> $data
+     *
+     * @return BaseResponse
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
+    public function renew(string $domain, array $data): BaseResponse
+    {
+        $response = $this->httpClient->request('domains/' . rawurlencode($domain) . '/renew', 'PUT', [], [], $data);
+
+        $dataContents = json_decode($response->getBody()->getContents(), true);
+
+        $this->validate($response, $dataContents, 'Domains/Renew');
+
+        $renewResponse = new BaseResponse($dataContents);
+        $renewResponse->setHttpCode($response->getStatusCode());
+
+        return $renewResponse;
+    }
+
+    /**
+     * @param string $domain
+     *
+     * @return BaseResponse
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
+    public function redeem(string $domain): BaseResponse
+    {
+        $response = $this->httpClient->request('domains/' . rawurlencode($domain) . '/redeem', 'PUT');
+
+        $dataContents = json_decode($response->getBody()->getContents(), true);
+
+        $this->validate($response, $dataContents, 'Domains/Renew');
+
+        $renewResponse = new BaseResponse($dataContents);
+        $renewResponse->setHttpCode($response->getStatusCode());
+
+        return $renewResponse;
+    }
+
+    /**
+     * @param string $domain
+     *
+     * @return bool
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
+    public function resend(string $domain): bool
+    {
+        $response = $this->httpClient->request('domains/' . rawurlencode($domain) . '/resend', 'PUT');
+
+        $dataContents = $response->getBody()->getContents();
+
+        $this->validate($response, $dataContents);
+
+        return true;
+    }
 }
