@@ -68,6 +68,27 @@ class Redirect extends Entity
     }
 
     /**
+     * @param array<string, mixed> $redirects
+     *
+     * @return BaseResponse
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pananames\Api\Exceptions\InvalidApiResponse
+     */
+    public function bulkRedirect(array $redirects): BaseResponse
+    {
+        $response = $this->httpClient->request('domains/bulk_redirect', 'PUT', [], [], $redirects);
+        $dataContents = json_decode($response->getBody()->getContents(), true);
+
+        $this->validate($response, $dataContents, 'Redirect/BulkRedirect');
+
+        $bulkRedirectResponse = new BaseResponse($dataContents['data']);
+        $bulkRedirectResponse->setHttpCode($response->getStatusCode());
+
+        return $bulkRedirectResponse;
+    }
+
+    /**
      * @param string $domain
      *
      * @return string
