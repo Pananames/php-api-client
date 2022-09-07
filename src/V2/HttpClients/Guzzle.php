@@ -26,8 +26,8 @@ class Guzzle extends HttpClient
             'base_uri' => $this->apiUrl,
             'headers' => [
                 'Signature' => $signature,
-			    'Accept' => self::HEADER_ACCEPT,
-			    'Content-type' => self::HEADER_CONTENT_TYPE
+                'Accept' => self::HEADER_ACCEPT,
+                'Content-type' => self::HEADER_CONTENT_TYPE
             ],
             'http_errors' => false,
         ];
