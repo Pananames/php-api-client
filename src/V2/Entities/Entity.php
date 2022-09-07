@@ -28,7 +28,6 @@ class Entity
      * @return void
      *
      * @throws InvalidApiResponse
-     * @throws Exception
      */
     public function validate(ResponseInterface $response, array|string $dataContents, string $schema = ''): void
     {
@@ -40,7 +39,7 @@ class Entity
             $error = empty($dataContents['errors'])
                 ? $response->getReasonPhrase()
                 : "{$dataContents['errors'][0]['message']} {$dataContents['errors'][0]['description']}";
-            throw new Exception($error);
+            throw new InvalidApiResponse($error);
         }
 
         if ($schema) {
