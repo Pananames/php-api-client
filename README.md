@@ -75,7 +75,8 @@ The following list introduces main Pananames entities you can use:
 - TransferOut
 - Whois
 
-All the classes are fully described in `src/V2/Entities/` directory. Description of response objects can be found in `src/V2/Schemas/`
+All the classes are fully described in `src/V2/Entities/` directory. Description of response objects can be found in `src/V2/Schemas/`.
+
 Also you can find all usage examples in `src/Examples`.
 
 ### Testing
