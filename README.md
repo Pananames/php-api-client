@@ -17,11 +17,11 @@ To install the bindings via [Composer](http://getcomposer.org/), add the followi
 ```
 {
 	"require": {
-		"pananames/api2": "^1.0"
+		"pananames/php-api-client": "^1.0"
 	}
 }
 ```
-or run `composer require pananames/api2`.
+or run `composer require pananames/php-api-client`.
 
 ### Usage
 
