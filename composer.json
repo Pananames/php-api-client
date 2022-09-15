@@ -1,6 +1,7 @@
 {
-  "name": "pananames/php-api2",
+  "name": "pananames/php-api-client",
   "description": "PHP client for Pananames APIv2",
+  "keywords": ["api", "pananames", "library"],
   "authors": [
     {
       "name": "URLSolutions Inc.",
